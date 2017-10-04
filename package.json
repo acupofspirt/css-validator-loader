@@ -1,0 +1,41 @@
+{
+  "name": "css-validator-loader",
+  "version": "0.0.1",
+  "description": "CSS validator loader for Webpack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "css",
+    "style",
+    "stylesheet",
+    "validator",
+    "webpack",
+    "loader",
+    "csstree"
+  ],
+  "author": {
+    "name": "Maksim Nazarjev",
+    "email": "acupofspirt@gmail.com",
+    "url": "https://github.com/acupofspirt"
+  },
+  "homepage": "https://github.com/acupofspirt/css-validator-loader",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acupofspirt/css-validator-loader.git"
+  },
+  "bugs": {
+    "url": "https://github.com/acupofspirt/css-validator-loader/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "csstree-validator": "^1.2.1"
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true
+    }
+  }
+}
