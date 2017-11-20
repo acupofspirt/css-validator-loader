@@ -4,25 +4,15 @@ const csstreeValidator = require('csstree-validator'),
       chalk = require('chalk'),
       path = require('path')
 
-function generateBorder (length) {
-  // We can't properly caclulate string width
-  // in pixels due to non-monospace fonts,
-  // so we add thirty extra symbols
-  const castedLength = Math.ceil((length + 30) / 2),
-        char = '-'
 
-  return `${chalk.whiteBright.bold(new Array(castedLength + 1).join(` ${char}`))} `
-}
-
-function assembleMsg (strings, longestLineLength) {
-  const border = generateBorder(longestLineLength)
-  let msg = `${border}\n\n`
+function assembleMsg (strings) {
+  let msg = '\n'
 
   strings.forEach(str => {
     msg += `${str}\n`
   })
 
-  msg += `\n${border}`
+  msg += '\n'
 
   return msg
 }
@@ -31,13 +21,15 @@ function formatError (resPath, report) {
   const parsedPath = path.parse(resPath),
         pathFolders = parsedPath.dir.split(path.sep),
         foldersAmount = pathFolders.length,
-        msgLines = [],
+        messagesList = [],
         wb = chalk.whiteBright,
         mb = chalk.magentaBright
   let fileName = chalk.cyanBright(parsedPath.base)
 
-  // We want provide for user some useful
-  // info, such as one or two parent directories
+  /*
+   * We want provide for user some useful
+   * info, such as one or two parent directories
+   */
   if (foldersAmount >= 2) {
     fileName = path
       .join(pathFolders[foldersAmount - 2], pathFolders[foldersAmount - 1], fileName)
@@ -46,46 +38,22 @@ function formatError (resPath, report) {
     fileName = path.join(pathFolders[0], fileName)
   }
 
-  msgLines.push(
-    {
-      str: ` ${wb.bgRedBright(' Stylesheet error ')} ${wb('in "')}${fileName}${wb('" on line ')}${mb(report.line)}${wb(', column ')}${mb(report.column)}`,
-      chalkSymbols: 80
-    },
-    {
-      str: wb(` ${report.message}`),
-      chalkSymbols: 10
-    }
+  messagesList.push(
+    ` ${wb.bgRedBright(' Stylesheet error ')} ${wb('in "')}${fileName}${wb('" on line ')}${mb(report.line)}${wb(', column ')}${mb(report.column)}`,
+    ` ${wb(report.message)}`
   )
 
   if (report.details) {
-    msgLines.push({
-      str: report.details,
-      chalkSymbols: 0
-    })
+    messagesList.push(report.details)
   }
 
-  // Chalk add ten unicode symbols for each
-  // method call, like .whiteBright
-  // We can manually calculate that for each string
-  // and substract from common length
-  function findTrueLongest (longest, current) {
-    const trueLength = current.str.length - current.chalkSymbols
 
-    if (trueLength > longest) {
-      return trueLength
-    }
-
-    return longest
-  }
-
-  const longestLineLength = msgLines.reduce(findTrueLongest, 0),
-        messagesList = msgLines.map(e => e.str)
-
-  return assembleMsg(messagesList, longestLineLength)
+  return assembleMsg(messagesList)
 }
 
 function validate (content) {
-  /* Format description of report
+  /*
+   * Format description of report
    * {
    *   name: String,
    *   line: Number,
