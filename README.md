@@ -1,6 +1,6 @@
 # **css-validator-loader**
 
-Simple webpack loader for css validation. Based on [csstree-validator](https://github.com/csstree/validator).
+Simple webpack loader for CSS validation. Based on [csstree-validator](https://github.com/csstree/validator).
 
 ## **Install**
 
@@ -9,21 +9,25 @@ npm i -D css-validator-loader
 ```
 
 ## **Usage**
-Use it in pair with css/scss/whatevercss loader.
+Use it in pair with any css/scss/postcss loader.
 ```js
 module: {
-    rules: [
-      {
-        test: /\.css?$/,
-        loader: 'css-loader!css-validator-loader'
-      }
-    ]
-  },
+  rules: [
+    {
+      test: /\.css?$/,
+      loader: 'css-loader!css-validator-loader'
+    }
+  ]
+}
 ```
 
-## **What is "valid"?**
+## **About**  
+This loader will help you detect syntax errors and typos in your stylesheets by friendly warnings in console.
+
 
 [Here](https://csstree.github.io/docs/syntax.html) is described the grammar by which the validation is carried out.
+
+Compatible with Webpack 2/3.
 
 ## **License**
 
