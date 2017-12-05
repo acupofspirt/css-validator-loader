@@ -6,15 +6,9 @@ const csstreeValidator = require('csstree-validator'),
 
 
 function assembleMsg (strings) {
-  let msg = '\n'
+  const msg = strings.join('\n')
 
-  strings.forEach(str => {
-    msg += `${str}\n`
-  })
-
-  msg += '\n'
-
-  return msg
+  return `\n${msg}\n`
 }
 
 function formatError (resPath, report) {
@@ -28,11 +22,14 @@ function formatError (resPath, report) {
 
   /*
    * We want provide for user some useful
-   * info, such as one or two parent directories
+   * info, such as one or two subdirectories
    */
   if (foldersAmount >= 2) {
-    fileName = path
-      .join(pathFolders[foldersAmount - 2], pathFolders[foldersAmount - 1], fileName)
+    fileName = path.join(
+      pathFolders[foldersAmount - 2],
+      pathFolders[foldersAmount - 1],
+      fileName
+    )
   }
   else if (foldersAmount === 1) {
     fileName = path.join(pathFolders[0], fileName)
@@ -40,11 +37,11 @@ function formatError (resPath, report) {
 
   messagesList.push(
     ` ${wb.bgRedBright(' Stylesheet error ')} ${wb('in "')}${fileName}${wb('" on line ')}${mb(report.line)}${wb(', column ')}${mb(report.column)}`,
-    ` ${wb(report.message)}`
+    ` ${wb.red.dim.bold(report.message)}`
   )
 
   if (report.details) {
-    messagesList.push(report.details)
+    messagesList.push(` ${report.details}`)
   }
 
 
@@ -55,12 +52,12 @@ function validate (content) {
   /*
    * Format description of report
    * {
-   *   name: String,
-   *   line: Number,
-   *   column: Number,
-   *   property: String,
-   *   message: String
-   *   details: String | Null
+   *   name: string,
+   *   line: number,
+   *   column: number,
+   *   property: string,
+   *   message: string
+   *   details: string | null
    * }
    */
   const reports = JSON.parse(reporter(validateString(content)))
