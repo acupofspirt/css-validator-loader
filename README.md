@@ -27,7 +27,7 @@ This loader will help you detect syntax errors and typos in your stylesheets by 
 
 [Here](https://csstree.github.io/docs/syntax.html) is described the grammar by which the validation is carried out.
 
-Compatible with Webpack 2/3.
+Compatible with Webpack 2-4.
 
 ## **License**
 
