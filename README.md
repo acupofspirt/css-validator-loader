@@ -25,7 +25,7 @@ module: {
 This loader will help you detect syntax errors and typos in your stylesheets by friendly warnings in console.
 
 
-[Here](https://csstree.github.io/docs/syntax.html) is described the grammar by which the validation is carried out.
+[Here](https://csstree.github.io/docs/syntax.html) is described the grammar by which the validation is performed.
 
 Compatible with Webpack 2-4.
 
